@@ -1,0 +1,95 @@
+{
+  "units": "metres",
+  "epsilon": 0.0001,
+  "truck": {
+    "length": 13.62,
+    "width": 2.48,
+    "height": 2.65
+  },
+  "axes": {
+    "x": "length (cab to door)",
+    "y": "width (left to right)",
+    "z": "height (floor to roof)",
+    "origin": "inner bottom-left corner, looking toward the door",
+    "position": "coord_x, coord_y, coord_z are the cylinder centre"
+  },
+  "orientations": {
+    "flat": "cylinder axis parallel to Z; tyre lying down like a coin",
+    "parallel_to_end": "cylinder axis parallel to X; face parallel to the cab/door",
+    "parallel_to_side": "cylinder axis parallel to Y; face parallel to the side wall"
+  },
+  "types": {
+    "R1": {
+      "name": "165/70 R14",
+      "radius": 0.2933,
+      "width": 0.165,
+      "available": 15
+    },
+    "R2": {
+      "name": "195/65 R15",
+      "radius": 0.31725,
+      "width": 0.195,
+      "available": 15
+    },
+    "R3": {
+      "name": "205/55 R16",
+      "radius": 0.31595,
+      "width": 0.205,
+      "available": 15
+    },
+    "R4": {
+      "name": "225/75 R16C",
+      "radius": 0.37195,
+      "width": 0.225,
+      "available": 15
+    },
+    "R5": {
+      "name": "235/65 R16C",
+      "radius": 0.35595,
+      "width": 0.235,
+      "available": 15
+    },
+    "R6": {
+      "name": "275/70 R22.5",
+      "radius": 0.47825,
+      "width": 0.275,
+      "available": 15
+    },
+    "R7": {
+      "name": "315/70 R22.5",
+      "radius": 0.50625,
+      "width": 0.315,
+      "available": 15
+    },
+    "R8": {
+      "name": "315/80 R22.5",
+      "radius": 0.53775,
+      "width": 0.315,
+      "available": 15
+    },
+    "R9": {
+      "name": "385/65 R22.5",
+      "radius": 0.536,
+      "width": 0.385,
+      "available": 15
+    },
+    "R10": {
+      "name": "600/70 R30",
+      "radius": 0.801,
+      "width": 0.6,
+      "available": 15
+    },
+    "R11": {
+      "name": "650/65 R42",
+      "radius": 0.9559,
+      "width": 0.65,
+      "available": 15
+    },
+    "R12": {
+      "name": "710/70 R42",
+      "radius": 1.0304,
+      "width": 0.71,
+      "available": 15
+    }
+  }
+}

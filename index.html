@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tyre packing viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div class="flex h-full min-h-0">
+      <aside class="flex w-[340px] shrink-0 flex-col border-r border-white/[0.07] bg-[#121316]">
+        <header class="px-6 pt-6 pb-5">
+          <p class="text-[11px] font-medium tracking-[0.22em] text-[#8b8d87] uppercase">Metaheuristics</p>
+          <h1 class="mt-2 text-[22px] leading-tight font-medium tracking-[-0.02em] text-[#eeeee8]">Tyre packing</h1>
+          <p class="mt-2 text-[13px] leading-relaxed text-[#8b8d87]">
+            Validate a solution and inspect the arrangement inside the cargo box.
+          </p>
+        </header>
+
+        <section class="px-6 pb-5">
+          <label
+            id="drop-zone"
+            class="group flex cursor-pointer flex-col rounded-lg border border-white/[0.1] bg-white/[0.025] px-4 py-5 transition hover:border-white/[0.18] hover:bg-white/[0.04]"
+          >
+            <input id="file-input" type="file" accept="application/json,.json" class="hidden" />
+            <span class="text-[13px] font-medium text-[#eeeee8]">Drop solution JSON</span>
+            <span class="mt-1 text-[12px] text-[#8b8d87]">or click to browse</span>
+          </label>
+          <div class="mt-3 flex items-center justify-between gap-3 text-[12px]">
+            <div class="flex gap-3 text-[#8b8d87]">
+              <button id="load-valid" type="button" class="hover:text-[#eeeee8]">Valid example</button>
+              <button id="load-overlap" type="button" class="hover:text-[#eeeee8]">Overlap example</button>
+            </div>
+          </div>
+          <p id="file-name" class="mt-3 truncate text-[12px] text-[#6e706b]">No file loaded</p>
+        </section>
+
+        <section class="border-t border-white/[0.07] px-6 py-5">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-[11px] tracking-[0.16em] text-[#8b8d87] uppercase">Free space</p>
+              <p id="metric-free" class="mono mt-2 text-[28px] leading-none tracking-tight text-[#eeeee8]">—</p>
+              <p class="mt-1 text-[12px] text-[#8b8d87]">cubic metres</p>
+            </div>
+            <div
+              id="status-card"
+              class="mt-1 inline-flex items-center gap-2 rounded-full border border-white/[0.08] px-2.5 py-1"
+            >
+              <span id="status-dot" class="h-1.5 w-1.5 rounded-full bg-[#6e706b]"></span>
+              <span id="status-text" class="text-[11px] font-medium tracking-wide text-[#8b8d87]">Idle</span>
+            </div>
+          </div>
+          <p id="metaheuristic-text" class="mt-3 hidden text-[12px] text-[#8b8d87]"></p>
+          <div class="mt-5">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[11px] tracking-[0.14em] text-[#8b8d87] uppercase">Fill</span>
+              <span id="metric-density" class="mono text-[12px] text-[#eeeee8]">—</span>
+            </div>
+            <div class="mt-2 h-px overflow-hidden bg-white/[0.08]">
+              <div id="density-bar" class="h-full bg-[#d7d3c8] transition-[width] duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="border-t border-white/[0.07] px-6 py-5">
+          <div class="space-y-2.5 text-[13px]">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[#8b8d87]">Occupied</span>
+              <span id="metric-occupied" class="mono text-[#eeeee8]">—</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+              <span class="text-[#8b8d87]">Truck volume</span>
+              <span id="metric-truck" class="mono text-[#eeeee8]">—</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="border-t border-white/[0.07] px-6 py-5">
+          <p class="text-[11px] tracking-[0.16em] text-[#8b8d87] uppercase">Inventory</p>
+          <div id="counts" class="mt-3 space-y-2 text-[13px]"></div>
+        </section>
+
+        <section id="error-panel" class="hidden min-h-0 flex-1 overflow-y-auto border-t border-white/[0.07] px-6 py-5">
+          <p class="text-[11px] tracking-[0.16em] text-[#c45c4a] uppercase">Issues</p>
+          <ul id="errors" class="mt-3 space-y-2 text-[12px] leading-relaxed text-[#d7c2bc]"></ul>
+        </section>
+      </aside>
+
+      <main class="relative min-w-0 flex-1 bg-[#0c0d0f]">
+        <canvas id="scene" class="block h-full w-full"></canvas>
+        <div class="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between px-5 py-4">
+          <div class="rounded-md bg-black/35 px-3 py-2 text-[11px] tracking-wide text-[#c8c9c3] backdrop-blur-sm">
+            <p class="text-[#eeeee8]">X length · Y width · Z height</p>
+            <p class="mt-0.5 text-[#8b8d87]">Drag to orbit · scroll to zoom</p>
+          </div>
+          <div class="pointer-events-auto flex items-center gap-2">
+            <label class="flex items-center gap-2 rounded-md bg-black/35 px-3 py-2 text-[12px] text-[#c8c9c3] backdrop-blur-sm">
+              <span class="switch">
+                <input id="toggle-volumes" type="checkbox" />
+                <span></span>
+              </span>
+              Collision volume
+            </label>
+            <button
+              id="reset-view"
+              type="button"
+              class="rounded-md bg-black/35 px-3 py-2 text-[12px] text-[#c8c9c3] backdrop-blur-sm hover:text-[#eeeee8]"
+            >
+              Reset view
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
