@@ -1,0 +1,19 @@
+{
+  "metaheuristic": "example-overlap",
+  "placements": [
+    {
+      "coord_x": 0.5,
+      "coord_y": 0.5,
+      "coord_z": 0.0825,
+      "type": "R1",
+      "orientation": "flat"
+    },
+    {
+      "coord_x": 0.55,
+      "coord_y": 0.5,
+      "coord_z": 0.0825,
+      "type": "R1",
+      "orientation": "flat"
+    }
+  ]
+}

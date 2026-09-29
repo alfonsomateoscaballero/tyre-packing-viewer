@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0c0d0f;
+  --panel: #121316;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #eeeee8;
+  --muted: #8b8d87;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Instrument Sans", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.dim-label {
+  color: rgb(238 238 232 / 0.42);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.switch {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch span {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 0.12);
+  transition: background 120ms ease;
+}
+
+.switch span::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 99px;
+  background: #eeeee8;
+  transition: transform 120ms ease;
+}
+
+.switch input:checked + span {
+  background: #c8c4b8;
+}
+
+.switch input:checked + span::after {
+  transform: translateX(12px);
+  background: #121316;
+}
+
+#label-layer > div {
+  pointer-events: none;
+}

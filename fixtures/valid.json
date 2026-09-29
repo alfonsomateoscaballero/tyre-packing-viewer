@@ -1,0 +1,30 @@
+[
+  {
+    "coord_x": 0.2933,
+    "coord_y": 0.2933,
+    "coord_z": 0.0825,
+    "type": "R1",
+    "orientation": "flat"
+  },
+  {
+    "coord_x": 0.8799,
+    "coord_y": 0.2933,
+    "coord_z": 0.0825,
+    "type": "R1",
+    "orientation": "flat"
+  },
+  {
+    "coord_x": 2.0,
+    "coord_y": 0.37195,
+    "coord_z": 0.37195,
+    "type": "R4",
+    "orientation": "parallel_to_end"
+  },
+  {
+    "coord_x": 3.2,
+    "coord_y": 2.3225,
+    "coord_z": 0.53775,
+    "type": "R8",
+    "orientation": "parallel_to_side"
+  }
+]
